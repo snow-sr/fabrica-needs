@@ -70,3 +70,15 @@ export function getAllFabricadores(req: Request, res: Response) {
     res.json(fabricadores);
   });
 }
+
+export function getAllSolvedNeeds(req: Request, res: Response) {
+  prisma.need
+    .findMany({
+      where: {
+        fabricadorWhoSolved: req.params.id,
+      },
+    })
+    .then((needs) => {
+      res.json(needs);
+    });
+}

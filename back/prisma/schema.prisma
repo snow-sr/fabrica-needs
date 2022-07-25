@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,21 +8,21 @@ datasource db {
 }
 
 model Need {
-  id                  Int        @id @default(autoincrement())
-  name                String // The name of the need  
-  description         String // The description of the need
-  solved              Boolean    @default(false) // Whether the need has been solved
-  fabricadorWhoSolved String // The fabricador who solved the need
-  solvedBy            Fabricador @relation(fields: [fabricadorWhoSolved], references: [id]) // The fabricador that solved the need
-  priority            Int        @default(1) // The priority of the need
-  createdAt           DateTime   @default(now()) // The date when the need was created
-  updatedAt           DateTime   @default(now()) // The date when the need was updated
-  solvedAt            DateTime // The date when the need was solved
+  id                  Int         @id @default(autoincrement())
+  name                String
+  description         String
+  solved              Boolean     @default(false)
+  fabricadorWhoSolved String?
+  priority            Int         @default(1)
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @default(now())
+  solvedAt            DateTime?
+  solvedBy            Fabricador? @relation(fields: [fabricadorWhoSolved], references: [id], onDelete: SetNull, onUpdate: Cascade)
 }
 
 model Fabricador {
   id                String   @id @default(cuid())
-  name              String
+  name              String   @unique
   email             String   @unique
   password          String
   isGithubConnected Boolean  @default(false)
