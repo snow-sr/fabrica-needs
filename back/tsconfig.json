@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "outDir": "back/build",
+        "outDir": "build",
         "target": "ES6",
         "moduleResolution": "node",
         "strict": true,

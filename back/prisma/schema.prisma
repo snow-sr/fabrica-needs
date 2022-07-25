@@ -25,8 +25,9 @@ model Need {
 
 model Fabricador {
   id                String   @id @default(cuid())
-  nome              String
+  name              String
   email             String   @unique
+  password          String
   isGithubConnected Boolean  @default(false)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @default(now())

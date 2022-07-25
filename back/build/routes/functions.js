@@ -8,21 +8,67 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { PrismaClient } from "@prisma/client";
+import { hashIt, compareIt } from "../encrypt/encrypt.js";
 const prisma = new PrismaClient();
 export function createFabricador(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield prisma.fabricador.create({
-                data: {
-                    nome: "João Felipi Cardoso",
-                    email: "snowsr@snowsr.tech",
-                },
-            });
+        let pass = hashIt(req.body.password);
+        yield prisma.fabricador
+            .create({
+            data: {
+                name: req.body.name,
+                email: req.body.email,
+                password: (yield pass).toString(),
+            },
+        })
+            .then((result) => {
             res.send("Fabricador criado com sucesso!");
+        })
+            .catch((err) => {
+            res.status(403).send("Erro ao criar fabricador");
+        });
+    });
+}
+export function deleteFabricador(req, res) {
+    prisma.fabricador
+        .delete({
+        where: {
+            id: req.params.id,
+        },
+    })
+        .then((result) => {
+        res.send("Fabricador deletado com sucesso!");
+    })
+        .catch((err) => {
+        res.status(403).send("Erro ao deletar fabricador");
+    });
+}
+export function loginFabricador(req, res) {
+    const login = (email, password) => __awaiter(this, void 0, void 0, function* () {
+        const fabricador = yield prisma.fabricador.findUnique({
+            where: {
+                email: email,
+            },
+        });
+        if (fabricador) {
+            const isValid = yield compareIt(password, fabricador.password);
+            if (isValid) {
+                return fabricador;
+            }
         }
-        catch (_a) {
-            res.send("Erro ao criar fabricador");
+        return null;
+    });
+    login(req.body.email, req.body.password)
+        .then((result) => {
+        if (result) {
+            res.send(result);
         }
+        else {
+            res.status(403).send("Login inválido");
+        }
+    })
+        .catch((err) => {
+        res.status(403).send("Erro ao logar");
     });
 }
 export function getAllFabricadores(req, res) {
