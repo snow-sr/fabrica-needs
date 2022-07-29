@@ -1,8 +1,34 @@
-<script setup>
+<script>
 import NavBar from "../components/NavBar.vue";
-import Footer from "../components/FooterComponent.vue";
+import FooterComp from "../components/FooterComponent.vue";
 import headerComp from "../components/genericHeader.vue";
 import listNeeds from "../components/listNeeds.vue";
+import { useAuth0 } from "@auth0/auth0-vue";
+
+export default {
+  setup() {
+    const { loginWithRedirect, user, isAuthenticated } = useAuth0();
+
+    return {
+      login: () => {
+        loginWithRedirect();
+      },
+      user,
+      isAuthenticated,
+    };
+  },
+  components: {
+    NavBar,
+    FooterComp,
+    headerComp,
+    listNeeds,
+  },
+  mounted() {
+    if (this.isAuthenticated == false) {
+      this.$router.push("/");
+    }
+  },
+};
 </script>
 
 <template>
@@ -29,7 +55,7 @@ import listNeeds from "../components/listNeeds.vue";
 
     <!-- footer -->
     <div class="bottom-1">
-      <Footer />
+      <FooterComp />
     </div>
     <!-- footer -->
   </div>

@@ -8,6 +8,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@auth0/auth0-vue": "^1.0.2",
     "axios": "^0.27.2",
     "chart.js": "^3.8.2",
     "flowbite": "^1.5.1",

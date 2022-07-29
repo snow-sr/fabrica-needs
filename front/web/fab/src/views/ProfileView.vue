@@ -2,6 +2,7 @@
 import NavBar from "../components/NavBar.vue";
 import FooterComp from "../components/FooterComponent.vue";
 import ListNeeds from "../components/listNeeds.vue";
+import { useAuth0 } from "@auth0/auth0-vue";
 
 import { Bar } from "vue-chartjs";
 import {
@@ -40,6 +41,30 @@ export default {
       },
     };
   },
+
+  setup() {
+    const { user, isAuthenticated, logout } = useAuth0();
+
+    const logoutRedirect = () => {
+      logout();
+    };
+
+    return {
+      user,
+      isAuthenticated,
+      logoutRedirect,
+    };
+  },
+  mounted() {
+    if (this.isAuthenticated == false) {
+      this.$router.push("/");
+    }
+  },
+  methods: {
+    triggerLogout() {
+      this.logoutRedirect();
+    },
+  },
 };
 </script>
 
@@ -58,14 +83,15 @@ export default {
           <div class="flex justify-center items-center">
             <img
               class="p-1 w-32 h-32 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-              src="https://picsum.photos/200"
+              :src="user.picture"
               alt="Profile Picture"
             />
           </div>
           <p
+            @click="triggerLogout"
             class="underline mt-2 mb-2 text-center font-mono text-gray-500 sm:text-lg dark:text-blue-500"
           >
-            João Felipi Cardoso
+            {{ user.name }}
           </p>
           <p
             class="mt-5 mb-2 text-base font-mono text-gray-500 sm:text-lg dark:text-gray-400"
