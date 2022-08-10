@@ -1,22 +1,34 @@
 <script>
+import { mapState, mapActions } from "pinia";
+import { useNeedsStore } from "../stores/needStore";
+
 export default {
-  data() {
-    return {
-      list: [
-        { name: "Bombons", priority: 100 },
-        { name: "Chá", priority: 0 },
-        { name: "Refrigerante", priority: 80 },
-        { name: "Café", priority: 100 },
-      ],
-    };
+  computed: {
+    ...mapState(useNeedsStore, ["listOfNeeds"]),
+    lista() {
+      return this.listOfNeeds || [{ name: "Carregando", priority: 100 }];
+    },
   },
-  method: {
+  // data() {
+  //   return {
+  //     list: this. || [{ name: "Carregando", priority: 100 }],
+  //   };
+  // },
+  methods: {
+    ...mapActions(useNeedsStore, ["fetchNeeds"]),
     solve(id) {
       alert(id);
     },
   },
   props: {
     title: String,
+  },
+  async mounted() {
+    try {
+      await this.fetchNeeds();
+    } catch (e) {
+      alert(e);
+    }
   },
 };
 </script>
@@ -35,7 +47,7 @@ export default {
       </div>
       <div class="flow-root">
         <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-          <li v-for="(item, i) of list" :key="i" class="py-3 sm:py-4">
+          <li v-for="(item, i) of lista" :key="i" class="py-3 sm:py-4">
             <div class="border-b border-gray-500 flex items-center space-x-4">
               <div class="flex-1 min-w-0">
                 <p

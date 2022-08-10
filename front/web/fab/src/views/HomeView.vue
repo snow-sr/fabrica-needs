@@ -5,11 +5,14 @@ import headerComp from "../components/genericHeader.vue";
 import listNeeds from "../components/listNeeds.vue";
 import { useAuth0 } from "@auth0/auth0-vue";
 
+// import { useNeedsStore } from "../stores/counter";
+
 export default {
   setup() {
     const { loginWithRedirect, user, isAuthenticated } = useAuth0();
 
     return {
+      // useNeedsStore,
       login: () => {
         loginWithRedirect();
       },

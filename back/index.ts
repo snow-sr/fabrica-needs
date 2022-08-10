@@ -1,10 +1,13 @@
 import express from "express"; //Importing Express
+import { auth } from "express-openid-connect";
+import 
 import cors from "cors"; //Importing Cors
 const app: express.Application = express(); // initializing express aplication
 const port: Number | String = process.env.PORT || 8087; // initializing port
 
 app.use(cors()); // enabling cors
 app.use(express.json()); // enabling json requests
+app.use(auth());
 
 import {
   createFabricador,
