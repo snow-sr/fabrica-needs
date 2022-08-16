@@ -1,5 +1,27 @@
-<script setup>
+<script>
 import kbdComp from "./details/kbdComp.vue";
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      bonbons: 0,
+    };
+  },
+  methods: {
+    getBonbons() {
+      axios.get("http://localhost:8087/api/bombons").then((response) => {
+        this.bonbons = response.data.qntd;
+      });
+    },
+  },
+  components: {
+    kbdComp,
+  },
+  mounted() {
+    this.getBonbons();
+  },
+};
 </script>
 
 <template>
@@ -9,7 +31,7 @@ import kbdComp from "./details/kbdComp.vue";
     <h3 class="mb-3 text-3xl font-bold font-mono text-gray-900 dark:text-white">
       A banca possui:
     </h3>
-    <kbd-comp>0 Bombons</kbd-comp>
+    <kbd-comp>{{ bonbons }} Bonbons</kbd-comp>
     <p
       class="mt-5 mb-2 text-base font-mono text-gray-500 sm:text-lg dark:text-gray-400"
     >
