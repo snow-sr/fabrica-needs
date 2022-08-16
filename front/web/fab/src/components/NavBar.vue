@@ -10,13 +10,13 @@ export default {
 
 <template>
   <nav
-    class="font-mono bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded-b dark:bg-gray-900"
+    class="shadow font-mono bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded-b dark:bg-gray-900"
   >
     <div class="container flex flex-wrap justify-between items-center mx-auto">
-      <div class="justify-center flex">
+      <div class="justify-center">
         <img
-          src="@/assets/images/motherboard.svg"
-          class="mr-3 h-6 sm:h-9"
+          src="@/assets/images/icon2.png"
+          class="md:inline hidden mr-3 h-6 sm:h-9"
           alt="Fábrica Logo"
         />
 
@@ -142,6 +142,13 @@ export default {
               :to="'/profile'"
               class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
               >Perfil</RouterLink
+            >
+          </li>
+          <li>
+            <RouterLink
+              :to="'/profile2'"
+              class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+              >Perfil 2</RouterLink
             >
           </li>
           <li>

@@ -4,7 +4,7 @@ import kbdComp from "./details/kbdComp.vue";
 
 <template>
   <div
-    class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-700 dark:border-gray-600"
+    class="p-4 w-full text-center rounded-lg border shadow-md sm:p-8 dark:bg-gray-700 dark:border-gray-600"
   >
     <h3 class="mb-3 text-3xl font-bold font-mono text-gray-900 dark:text-white">
       A banca possui:

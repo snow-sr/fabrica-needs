@@ -39,6 +39,8 @@ export default {
           },
         ],
       },
+
+      key_animation: true,
     };
   },
 
@@ -64,6 +66,13 @@ export default {
     triggerLogout() {
       this.logoutRedirect();
     },
+    animation() {
+      if (this.key_animation == false) {
+        this.key_animation = true
+      } else {
+        this.key_animation = false
+      }
+    }
   },
 };
 </script>
@@ -78,27 +87,35 @@ export default {
     <div class="flex justify-center items-center mt-6">
       <div class="max-w-3xl">
         <div
-          class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-700 dark:border-gray-600"
+          class="p-4 w-full text-center relative bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-700 dark:border-gray-600"
         >
-          <div class="flex justify-center items-center">
-            <img
-              class="p-1 w-32 h-32 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-              :src="user.picture"
-              alt="Profile Picture"
-            />
-          </div>
-          <p
-            @click="triggerLogout"
-            class="underline mt-2 mb-2 text-center font-mono text-gray-500 sm:text-lg dark:text-blue-500"
-          >
-            {{ user.name }}
-          </p>
-          <p
-            class="mt-5 mb-2 text-base font-mono text-gray-500 sm:text-lg dark:text-gray-400"
-          >
-            Description: Lorem, ipsum dolor sit amet consectetur adipisicing
-            elit. Doloribus ipsam officia optio ipsum reiciendis.
-          </p>
+          <!-- mateus -->
+                    <div class="text-center">
+                        <div class="basis-12/12">
+                          <div class="flex justify-center items-center">
+                            <img
+                              class="p-1 w-32 h-32 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+                              :src="user.picture"
+                              alt="Profile Picture"
+                            />
+                          </div>
+                        </div>
+                        <div class="basis-12/12 text-center pl-6 font-mono text-gray-500 sm:text-lg dark:text-gray-400">
+                          <p
+                            @click="triggerLogout"
+                            class="mt-2 mb-2"
+                          >
+                            <span class="font-bold">Username: </span>
+                            <span class="underline text-blue-500">{{ user.name }}</span>
+                          </p>
+                          <p
+                            class="mt-5 mb-2 text-base"
+                          >
+                            <span class="font-bold">Description:</span> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus ipsam officia optio ipsum reiciendis.
+                          </p>
+                        </div>
+                    </div>
+          <!-- /mateus -->
         </div>
       </div>
     </div>
