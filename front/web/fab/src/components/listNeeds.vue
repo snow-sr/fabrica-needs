@@ -1,6 +1,6 @@
 <template>
     <section class="p-4 rounded-lg sm:p-8 w-full">
-        <div class="text-xl font-bold leading-none text-gray-500 dark:text-gray-400 mb-4">
+        <div class="text-xl font-bold leading-none text-gray-900 dark:text-white mb-4">
             <h5>
                 {{title}}
             </h5>

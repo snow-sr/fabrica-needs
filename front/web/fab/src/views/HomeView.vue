@@ -1,6 +1,6 @@
 <template>
     <!-- div-dark-theme -->
-    <div class="">
+    <div :class="{'dark':theme}" class="min-h-screen min-w-screen">
         <!-- header -->
         <header class="w-full dark:bg-gray-800">
              <!-- navbar -->
@@ -8,8 +8,8 @@
             <!-- navbar -->
         </header><!-- header -->
         <!-- main -->
-        <main class="dark:bg-gray-800">
-            <div class="w-7/12 mx-auto justify-center pt-6">
+        <main class="dark:bg-gray-800 h-full">
+            <div class="w-10/12 xl:w-7/12 mx-auto justify-center pt-6 pb-10">
                 <section class="w-full">
                     <div class="
                         bg-gray-100
@@ -24,11 +24,12 @@
                         dark:bg-gray-700 
                         dark:border-gray-600
                     ">
-                        <headerComp />
+                        <headerComp btn=True title="A banca possui:" content="A cada duas semanas, a gente dá um bombom para a banca, assim poderemos ter recompensas pelas necessidades resolvidas." />
                     </div>
                 </section>
-                <section class="w-full mt-6">
+                <section class="w-full mt-4 h-56">
                     <div class="
+                            text-center
                             bg-gray-100
                             flex flex-row
                             p-4
@@ -46,12 +47,10 @@
                 </section>
             </div>
         </main>
-
         <!-- footer -->
-        <div class="bottom-0 left-0 w-full absolute">
+        <div class="w-full">
             <FooterComp />
-        </div>
-        <!-- footer -->
+        </div><!-- footer -->
     </div>
 </template>
 
@@ -82,6 +81,9 @@ export default {
     FooterComp,
     headerComp,
     listNeeds,
+  },
+  props: {
+    theme:Boolean
   },
   mounted() {
     if (this.isAuthenticated == false) {
