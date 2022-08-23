@@ -1,13 +1,13 @@
 import express from "express"; //Importing Express
 import { auth } from "express-openid-connect";
-import 
+import { config } from "./auth/authConfig.js";
 import cors from "cors"; //Importing Cors
 const app: express.Application = express(); // initializing express aplication
 const port: Number | String = process.env.PORT || 8087; // initializing port
 
 app.use(cors()); // enabling cors
 app.use(express.json()); // enabling json requests
-app.use(auth());
+app.use(auth(config));
 
 import {
   createFabricador,
@@ -23,6 +23,8 @@ import {
   deleteNeed,
   solveNeed,
 } from "./routes/needsFunctions.js";
+
+import { getAllPermissions } from "./routes/permissionsFunctions.js";
 
 app.get("/", (req: express.Request, res: express.Response) => {
   console.log(req.ip);
@@ -49,6 +51,11 @@ app.post("/createNeed", createNeed);
 app.delete("/deleteNeed/:id", deleteNeed);
 
 app.post("/solveNeed", solveNeed);
+
+// (Permissions)
+app.get("/permissions", getAllPermissions);
+
+// (Banking)
 
 app.listen(port, () => {
   console.log(`Server opened at port: ${port}`);

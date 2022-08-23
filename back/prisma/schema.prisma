@@ -12,21 +12,44 @@ model Need {
   name                String
   description         String
   solved              Boolean     @default(false)
+  aproved             Boolean     @default(false)
   fabricadorWhoSolved String?
   priority            Int         @default(1)
   createdAt           DateTime    @default(now())
   updatedAt           DateTime    @default(now())
   solvedAt            DateTime?
   solvedBy            Fabricador? @relation(fields: [fabricadorWhoSolved], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  banking             banking?    @relation(fields: [bankingId], references: [id])
+  bankingId           String?
 }
 
 model Fabricador {
-  id                String   @id @default(cuid())
-  name              String   @unique
-  email             String   @unique
+  id                String       @id @default(cuid())
+  name              String       @unique
+  email             String       @unique
   password          String
-  isGithubConnected Boolean  @default(false)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @default(now())
+  isGithubConnected Boolean      @default(false)
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @default(now())
   Need              Need[]
+  Permissions       Permission[]
+  banking           banking[]
+}
+
+model Permission {
+  id           String      @id @default(cuid())
+  name         String      @unique
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @default(now())
+  Fabricador   Fabricador? @relation(fields: [fabricadorId], references: [id])
+  fabricadorId String?
+}
+
+model banking {
+  id           String     @id @default(cuid())
+  candyCount   Int        @default(0)
+  updatedAt    DateTime   @default(now())
+  Fabricador   Fabricador @relation(fields: [fabricadorId], references: [id])
+  fabricadorId String
+  toAprove     Need[]
 }
