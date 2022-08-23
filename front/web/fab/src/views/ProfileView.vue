@@ -1,3 +1,91 @@
+<template>
+    <!-- div-dark-theme -->
+    <div :class="{'dark':theme}" class="min-h-screen min-w-screen">
+        <!-- header -->
+        <header class="w-full dark:bg-gray-800">
+             <!-- navbar -->
+            <NavBar />
+            <!-- navbar -->
+        </header><!-- header -->
+        <!-- main -->
+        <main class="dark:bg-gray-800 h-full">
+            <div class="w-10/12 xl:w-7/12 mx-auto justify-center pt-6 pb-10">
+                <section class="w-full">
+                    <div class="
+                        bg-gray-100
+                        lg:flex lg:flex-row
+                        p-4
+                        relative 
+                        bg-white 
+                        rounded-lg 
+                        border 
+                        shadow-md 
+                        dark:bg-gray-700 
+                        dark:border-gray-600
+                    ">
+                        <div class="basis-3/12">
+                            <div class="flex justify-center items-center">
+                                <img
+                                    class="p-1 w-32 h-32 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+                                    :src="user.picture"
+                                    alt="Profile Picture"
+                                />
+                                <a href="#" @click='animation' class="absolute flex top-2 right-2 p-2 dark:bg-gray-800 rounded-full">
+                                    <img src="./../assets/images/edit-icon.png" class=" h-8 w-8" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="basis-9/12 flex items-center justify-center text-center lg:text-left pl-6 font-mono text-gray-900 sm:text-lg dark:text-white">
+                            <div>
+                                <p @click="triggerLogout" class="mt-2 lg:mt-2 lg:mb-2">
+                                    <span class="block lg:inline lg:py-0 py-4 font-bold">Username: </span>
+                                    <span class="block lg:inline underline text-blue-500">{{ user.name }}</span>
+                                </p>
+                                <p class="mt-2 lg:mt-5 lg:mb-2 text-base">
+                                    <span class="block lg:inline lg:py-0 py-4 font-bold">Descrição: </span> 
+                                    <p class="block lg:inline" :class="{hidden: !key_animation}">
+                                        Você ainda não digitou uma descrição...
+                                    </p>
+                                </p>
+                                </div>
+                            </div>
+                    </div>
+                </section>
+                 <!-- contribuições -->
+                <section class="mt-4">
+                    <div class="
+                        bg-gray-100
+                        p-4
+                        flex flex-row
+                        relative 
+                        bg-white 
+                        rounded-lg 
+                        border 
+                        shadow-md 
+                        dark:bg-gray-700 
+                        dark:border-gray-600
+                    ">
+                        <div class="md:flex h-full w-full">
+                            <div class="md:basis-6/12">
+                                <list-needs title="Últimas contribuições:"></list-needs>
+                            </div>
+                            <div class="md:w-6/12 lg:p-8">
+                                <!-- grafico -->
+                                <Bar :chart-data="chartData"/>
+                                <!-- /grafico -->
+                            </div>
+                        </div>
+                    </div>
+                </section><!-- /contribuições -->
+            </div>
+        </main><!-- /main -->
+        <!-- footer -->
+        <div class="w-full">
+            <FooterComp />
+        </div><!-- footer -->
+    </div><!-- /div-dark-theme -->
+</template>
+
 <script>
 import NavBar from "../components/NavBar.vue";
 import FooterComp from "../components/FooterComponent.vue";
@@ -6,119 +94,80 @@ import { useAuth0 } from "@auth0/auth0-vue";
 
 import { Bar } from "vue-chartjs";
 import {
-  Chart as ChartJS,
-  Title,
-  Tooltip,
-  Legend,
-  BarElement,
-  CategoryScale,
-  LinearScale,
+Chart as ChartJS,
+Title,
+Tooltip,
+Legend,
+BarElement,
+CategoryScale,
+LinearScale,
 } from "chart.js";
 
 ChartJS.register(
-  Title,
-  Tooltip,
-  Legend,
-  BarElement,
-  CategoryScale,
-  LinearScale
+Title,
+Tooltip,
+Legend,
+BarElement,
+CategoryScale,
+LinearScale
 );
 
 export default {
-  name: "BarChart",
-  components: { Bar, NavBar, FooterComp, ListNeeds },
-  data() {
-    return {
-      chartData: {
-        labels: ["último mês", "última semana", "Hoje"],
-        datasets: [
-          {
-            label: "Contribuições do usuário",
-            backgroundColor: "#0E7490",
-            data: [7, 3, 1],
-          },
-        ],
-      },
-    };
-  },
+    name: "BarChart",
+    components: { Bar, NavBar, FooterComp, ListNeeds },
+    data() {
+        return {
+        chartData: {
+            labels: ["último mês", "última semana", "Hoje"],
+            datasets: [
+            {
+                label: "Contribuições do usuário",
+                backgroundColor: "#0E7490",
+                data: [7, 3, 1],
+            },
+            ],
+        },
 
-  setup() {
-    const { user, isAuthenticated, logout } = useAuth0();
-
-    const logoutRedirect = () => {
-      logout();
-    };
-
-    return {
-      user,
-      isAuthenticated,
-      logoutRedirect,
-    };
-  },
-  mounted() {
-    if (this.isAuthenticated == false) {
-      this.$router.push("/");
-    }
-  },
-  methods: {
-    triggerLogout() {
-      this.logoutRedirect();
+        key_animation: true,
+        };
     },
-  },
+
+    setup() {
+        const { user, isAuthenticated, logout } = useAuth0();
+
+        const logoutRedirect = () => {
+        logout();
+        };
+
+        return {
+        user,
+        isAuthenticated,
+        logoutRedirect,
+        };
+    },
+    mounted() {
+        if (this.isAuthenticated == false) {
+        this.$router.push("/");
+        }
+    },
+    methods: {
+        triggerLogout() {
+            this.logoutRedirect();
+            },
+            animation() {
+            if (this.key_animation == false) {
+                this.key_animation = true
+            } else {
+                this.key_animation = false
+            }
+        }
+    },
+    props: {
+        theme:Boolean
+    },
 };
 </script>
 
-<template>
-  <div class="dark min-h-screen h-full bg-gray-800">
-    <!-- navbar -->
-    <NavBar />
-    <!-- navbar -->
+<style scoped>
 
-    <!-- header -->
-    <div class="flex justify-center items-center mt-6">
-      <div class="max-w-3xl">
-        <div
-          class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-700 dark:border-gray-600"
-        >
-          <div class="flex justify-center items-center">
-            <img
-              class="p-1 w-32 h-32 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-              :src="user.picture"
-              alt="Profile Picture"
-            />
-          </div>
-          <p
-            @click="triggerLogout"
-            class="underline mt-2 mb-2 text-center font-mono text-gray-500 sm:text-lg dark:text-blue-500"
-          >
-            {{ user.name }}
-          </p>
-          <p
-            class="mt-5 mb-2 text-base font-mono text-gray-500 sm:text-lg dark:text-gray-400"
-          >
-            Description: Lorem, ipsum dolor sit amet consectetur adipisicing
-            elit. Doloribus ipsam officia optio ipsum reiciendis.
-          </p>
-        </div>
-      </div>
-    </div>
-    <!-- header -->
-
-    <!-- content -->
-    <div class="mt-20 flex justify-center h-full">
-      <div class="m-5">
-        <Bar :chart-data="chartData" />
-      </div>
-      <div class="m-5">
-        <list-needs title="Últimas contribuições:"></list-needs>
-      </div>
-    </div>
-    <!-- content -->
-
-    <!-- footer -->
-    <div class="mt-12 bottom-1">
-      <FooterComp />
-    </div>
-    <!-- footer -->
-  </div>
-</template>
+</style>

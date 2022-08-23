@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import ProfileView from "../views/ProfileView.vue";
+import ConfigView from "../views/ConfigView.vue";
 import YouNeedToLogin from "../views/YouNeedToLogin.vue";
 
 const router = createRouter({
@@ -20,6 +21,11 @@ const router = createRouter({
       path: "/profile",
       name: "profile",
       component: ProfileView,
+    },
+    {
+      path: "/config",
+      name: "config",
+      component: ConfigView,
     },
   ],
 });

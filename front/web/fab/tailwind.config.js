@@ -4,7 +4,8 @@ module.exports = {
   content: ["./src/**/*.vue", "./node_modules/tw-elements/dist/js/**/*.js"],
   darkMode: "class",
   theme: {
-    extend: {},
+    extend: {
+    },
   },
   plugins: [require("tw-elements/dist/plugin"), require("flowbite/plugin")],
 };
