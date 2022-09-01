@@ -9,7 +9,7 @@ export async function createFabricador(req: Request, res: Response) {
     .create({
       data: {
         name: req.body.name,
-        email: req.body.email,
+        userName: req.body.userName,
         password: (await pass).toString(),
       },
     })
@@ -37,10 +37,10 @@ export function deleteFabricador(req: Request, res: Response) {
 }
 
 export function loginFabricador(req: Request, res: Response) {
-  const login = async (email: string, password: string) => {
+  const login = async (userName: string, password: string) => {
     const fabricador = await prisma.fabricador.findUnique({
       where: {
-        email: email,
+        userName: userName,
       },
     });
     if (fabricador) {
@@ -52,7 +52,7 @@ export function loginFabricador(req: Request, res: Response) {
     return null;
   };
 
-  login(req.body.email, req.body.password)
+  login(req.body.userName, req.body.password)
     .then((result) => {
       if (result) {
         res.send(result);

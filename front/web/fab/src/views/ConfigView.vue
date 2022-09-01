@@ -2,7 +2,6 @@
 import NavBar from "../components/NavBar.vue";
 import FooterComp from "../components/FooterComponent.vue";
 import headerComp from "../components/genericHeader.vue";
-import axios from "axios";
 import { useUserStore } from "@/stores/userStore.js";
 // import { useRouter } from "vue-router";
 // import { useNeedsStore } from "../stores/counter";
@@ -10,20 +9,6 @@ import { useUserStore } from "@/stores/userStore.js";
 export default {
   setup() {
     const store = useUserStore();
-    const session = localStorage.getItem("session");
-    // const router = useRouter();
-    if (session) {
-      axios
-        .get(`http://localhost:8087/getFabricador/${session}`)
-        .then((res) => {
-          let User = { ...res.data };
-          store.insertData(User);
-          return User;
-        })
-        .catch(() => {
-          //
-        });
-    }
 
     return {
       store,
@@ -43,6 +28,10 @@ export default {
       this.$emit("c");
       console.log(x);
     },
+    logout() {
+      localStorage.clear("session");
+      this.$router.push("/");
+    },
   },
   components: {
     NavBar,
@@ -50,7 +39,7 @@ export default {
     headerComp,
   },
   mounted() {
-    if (this.isAuthenticated == false) {
+    if (!localStorage.getItem("session")) {
       this.$router.push("/");
     }
   },
@@ -190,7 +179,7 @@ export default {
               </div>
             </div>
             <div>
-              <h2 class="mb-3">aaa:</h2>
+              <h2 class="mb-3">Perfil:</h2>
               <div class="flex flex-wrap items-center">
                 <div class="relative py-2 w-full">
                   <div
@@ -214,11 +203,10 @@ export default {
                   <input
                     disabled
                     readonly
-                    value="mateusalbano22@gmail.com"
                     type="text"
                     id="email-address-icon"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="name@flowbite.com"
+                    :placeholder="store.User.email"
                   />
                 </div>
                 <div class="relative py-2 w-full lg:w-6/12 lg:pr-2">
@@ -242,11 +230,10 @@ export default {
                   <input
                     disabled
                     readonly
-                    value="Mateus Lopes Albano"
                     type="text"
                     id="email-address-icon"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="name@flowbite.com"
+                    :placeholder="store.User.name"
                   />
                 </div>
                 <div class="relative py-2 w-5/6 pr-2 lg:w-4/12 lg:pl-2">
@@ -268,11 +255,11 @@ export default {
                   <input
                     disabled
                     readonly
-                    value="***********"
-                    type="text"
+                    value=""
+                    type="password"
                     id="email-address-icon"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="name@flowbite.com"
+                    placeholder="***********"
                   />
                 </div>
                 <div class="relative py-2 w-2/12">
@@ -391,6 +378,7 @@ export default {
               >
                 <div
                   class="bg-gray-300 text-gray-600 rounded-lg py-2 flex justify-center"
+                  @click="logout()"
                 >
                   Sair
                 </div>

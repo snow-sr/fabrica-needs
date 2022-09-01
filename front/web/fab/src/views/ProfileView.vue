@@ -39,7 +39,7 @@
                             <div>
                                 <p @click="triggerLogout" class="mt-2 lg:mt-2 lg:mb-2">
                                     <span class="block lg:inline lg:py-0 py-4 font-bold">Username: </span>
-                                    <span class="block lg:inline underline text-blue-500">{{ store.User.name }}</span>
+                                    <span class="block lg:inline underline text-blue-500">{{ store.User?.name }}</span>
                                 </p>
                                 <p class="mt-2 lg:mt-5 lg:mb-2 text-base">
                                     <span class="block lg:inline lg:py-0 py-4 font-bold">Descrição: </span> 
@@ -118,7 +118,9 @@ export default {
     components: { Bar, NavBar, FooterComp, ListNeeds },
     setup() {
         const store = useUserStore();
-        return store
+        return {
+            store
+        }
     }, 
     data() {
         return {
@@ -137,6 +139,11 @@ export default {
 
         };
     },
+    mounted() {
+    if (!localStorage.getItem("session")) {
+      this.$router.push("/");
+    }
+  },
 
     methods: {
 

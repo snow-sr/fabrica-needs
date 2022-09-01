@@ -17,7 +17,7 @@ export function createFabricador(req, res) {
             .create({
             data: {
                 name: req.body.name,
-                email: req.body.email,
+                userName: req.body.userName,
                 password: (yield pass).toString(),
             },
         })
@@ -44,10 +44,10 @@ export function deleteFabricador(req, res) {
     });
 }
 export function loginFabricador(req, res) {
-    const login = (email, password) => __awaiter(this, void 0, void 0, function* () {
+    const login = (userName, password) => __awaiter(this, void 0, void 0, function* () {
         const fabricador = yield prisma.fabricador.findUnique({
             where: {
-                email: email,
+                userName: userName,
             },
         });
         if (fabricador) {
@@ -58,7 +58,7 @@ export function loginFabricador(req, res) {
         }
         return null;
     });
-    login(req.body.email, req.body.password)
+    login(req.body.userName, req.body.password)
         .then((result) => {
         if (result) {
             res.send(result);

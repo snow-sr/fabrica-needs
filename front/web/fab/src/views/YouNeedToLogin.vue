@@ -19,9 +19,11 @@ export default {
   data() {
     return {
       isLogged: this.logged,
-      email: "",
+      userName: "",
+      fullName: "",
       user: "",
       pass: "",
+      register: false,
     };
   },
 
@@ -29,7 +31,7 @@ export default {
     login() {
       axios
         .post("http://localhost:8087/loginFabricador", {
-          email: this.email,
+          userName: this.userName,
           password: this.pass,
         })
         .then((res) => {
@@ -60,9 +62,12 @@ export default {
         <div
           class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
         >
-          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+          <div
+            class="p-6 space-y-4 md:space-y-6 sm:p-8"
+            v-if="register == false"
+          >
             <h1
-              class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
+              class="text-xl font-mono leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
             >
               Faça Login, Fabricador!
             </h1>
@@ -74,12 +79,12 @@ export default {
                   >Seu email</label
                 >
                 <input
-                  type="email"
+                  type="string"
                   name="email"
-                  v-model="email"
+                  v-model="userName"
                   id="email"
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="fabricador@mesa1.com"
+                  placeholder="fabricador@mesa1"
                   required="true"
                 />
               </div>
@@ -106,6 +111,83 @@ export default {
               >
                 Fazer login
               </button>
+            </div>
+            <a class="text-xs text-gray-500 underline" @click="register = true"
+              >precisa fazer registro?</a
+            >
+          </div>
+          <div
+            class="p-6 space-y-4 md:space-y-6 sm:p-8"
+            v-if="register == true"
+          >
+            <h1
+              class="text-xl font-mono leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
+            >
+              Faça Registro, Fabricador!
+            </h1>
+            <div class="space-y-4 md:space-y-6">
+              <div>
+                <label
+                  for="email"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Seu Nome Completo</label
+                >
+                <input
+                  type="string"
+                  name="email"
+                  v-model="userName"
+                  id="email"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Fabricador Da Silva Sauro"
+                  required="true"
+                />
+              </div>
+              <div class="space-y-4 md:space-y-6">
+                <div>
+                  <label
+                    for="email"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Seu User</label
+                  >
+                  <input
+                    type="string"
+                    name="email"
+                    v-model="userName"
+                    id="email"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="fabricador@mesa1"
+                    required="true"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="password"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Senha</label
+                  >
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="••••••••"
+                    v-model="pass"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required=""
+                  />
+                </div>
+                <button
+                  type="submit"
+                  @click="login()"
+                  class="w-full text-white bg-purple-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                >
+                  Fazer login
+                </button>
+              </div>
+              <a
+                class="text-xs text-gray-500 underline"
+                @click="register = false"
+                >precisa fazer login?</a
+              >
             </div>
           </div>
         </div>

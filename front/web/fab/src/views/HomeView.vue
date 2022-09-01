@@ -58,7 +58,7 @@ export default {
     theme: Boolean,
   },
   mounted() {
-    if (this.isAuthenticated == false) {
+    if (!localStorage.getItem("session")) {
       this.$router.push("/");
     }
   },
