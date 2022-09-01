@@ -10,10 +10,10 @@ const router = createRouter({
     {
       path: "/",
       name: "LOG PLEASE",
-      component: YouNeedToLogin,
+      component: LoginView,
     },
     {
-      path: "/dash",
+      path: "/callback",
       name: "home",
       component: HomeView,
     },
