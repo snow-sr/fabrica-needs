@@ -9,31 +9,39 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-export function AproveNeed(req, res) {
+// export async function AproveNeed(req: Request, res: Response) {
+//   let needId = req.body.id;
+//   let fabricadorId = req.body.fabricadorId;
+//   let user = await prisma.fabricador.findFirst({
+//     where: {
+//       id: fabricadorId,
+//     },
+//   });
+//   if (await user.permissions.includes("ADMIN")) {
+//     await prisma.need.update({
+//       where: {
+//         id: needId,
+//       },
+//       data: {
+//         solved: true,
+//         solvedBy: {
+//           connect: {
+//             id: fabricadorId,
+//           },
+//         },
+//         solvedAt: new Date(),
+//       },
+//     });
+//   }
+// }
+export function viewAccountBalance(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        let needId = req.body.id;
-        let fabricadorId = req.body.fabricadorId;
-        let user = yield prisma.fabricador.findFirst({
+        let userId = req.params.id;
+        const profile = yield prisma.fabricador.findFirst({
             where: {
-                id: fabricadorId,
+                id: userId,
             },
         });
-        if (yield user.permissions.includes("ADMIN")) {
-            yield prisma.need.update({
-                where: {
-                    id: needId,
-                },
-                data: {
-                    solved: true,
-                    solvedBy: {
-                        connect: {
-                            id: fabricadorId,
-                        },
-                    },
-                    solvedAt: new Date(),
-                },
-            });
-        }
     });
 }
 export function accountBalance(req, res) {

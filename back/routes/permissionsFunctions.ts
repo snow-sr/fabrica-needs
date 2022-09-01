@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 const prisma = new PrismaClient();
 
 export function getAllPermissions(req: Request, res: Response) {
-  prisma.permission.findMany({}).then((permissions) => {
+  prisma.permission.findMany({}).then((permissions: any) => {
     res.json(permissions);
   });
 }

@@ -1,13 +1,10 @@
 import express from "express"; //Importing Express
-import { auth } from "express-openid-connect";
-import { config } from "./auth/authConfig.js";
 import cors from "cors"; //Importing Cors
 const app: express.Application = express(); // initializing express aplication
 const port: Number | String = process.env.PORT || 8087; // initializing port
 
 app.use(cors()); // enabling cors
 app.use(express.json()); // enabling json requests
-app.use(auth(config));
 
 import {
   createFabricador,
@@ -15,6 +12,8 @@ import {
   deleteFabricador,
   getAllSolvedNeeds,
   loginFabricador,
+  getSpecificFabricador,
+  getBalance,
 } from "./routes/fabricadoresFunctions.js";
 
 import {
@@ -28,11 +27,20 @@ import { getAllPermissions } from "./routes/permissionsFunctions.js";
 
 app.get("/", (req: express.Request, res: express.Response) => {
   console.log(req.ip);
-  res.send("Hello there!");
+  let routes = app._router.stack
+    .filter((r: any) => r.route)
+    .map((r: any) => r.route.path);
+
+  console.log();
+  res.send(`Hello there! This is all available routes: ${routes}`);
 });
 
 // (Fabricadores)
 app.get("/fabricadores", getAllFabricadores);
+
+app.get("/getFabricador/:id", getSpecificFabricador);
+
+app.get("/:id/banking", getBalance);
 
 app.post("/createFabricador", createFabricador);
 

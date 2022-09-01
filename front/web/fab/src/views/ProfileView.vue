@@ -27,8 +27,8 @@
                             <div class="flex justify-center items-center">
                                 <img
                                     class="p-1 w-32 h-32 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-                                    :src="user.picture"
-                                    alt="Profile Picture"
+                                    :src="store"
+                                    :alt="store.name"
                                 />
                                 <a href="#" @click='animation' class="absolute flex top-2 right-2 p-2 dark:bg-gray-800 rounded-full">
                                     <img src="./../assets/images/edit-icon.png" class=" h-8 w-8" alt="">
@@ -39,7 +39,7 @@
                             <div>
                                 <p @click="triggerLogout" class="mt-2 lg:mt-2 lg:mb-2">
                                     <span class="block lg:inline lg:py-0 py-4 font-bold">Username: </span>
-                                    <span class="block lg:inline underline text-blue-500">{{ user.name }}</span>
+                                    <span class="block lg:inline underline text-blue-500">{{ store.User.name }}</span>
                                 </p>
                                 <p class="mt-2 lg:mt-5 lg:mb-2 text-base">
                                     <span class="block lg:inline lg:py-0 py-4 font-bold">Descrição: </span> 
@@ -90,7 +90,8 @@
 import NavBar from "../components/NavBar.vue";
 import FooterComp from "../components/FooterComponent.vue";
 import ListNeeds from "../components/listNeeds.vue";
-import { useAuth0 } from "@auth0/auth0-vue";
+import { useUserStore } from "../stores/userStore";
+
 
 import { Bar } from "vue-chartjs";
 import {
@@ -115,6 +116,10 @@ LinearScale
 export default {
     name: "BarChart",
     components: { Bar, NavBar, FooterComp, ListNeeds },
+    setup() {
+        const store = useUserStore();
+        return store
+    }, 
     data() {
         return {
         chartData: {
@@ -129,45 +134,19 @@ export default {
         },
 
         key_animation: true,
+
         };
     },
 
-    setup() {
-        const { user, isAuthenticated, logout } = useAuth0();
-
-        const logoutRedirect = () => {
-        logout();
-        };
-
-        return {
-        user,
-        isAuthenticated,
-        logoutRedirect,
-        };
-    },
-    mounted() {
-        if (this.isAuthenticated == false) {
-        this.$router.push("/");
-        }
-    },
     methods: {
-        triggerLogout() {
-            this.logoutRedirect();
-            },
+
             animation() {
             if (this.key_animation == false) {
                 this.key_animation = true
             } else {
                 this.key_animation = false
             }
-        }
-    },
-    props: {
-        theme:Boolean
+            }
     },
 };
 </script>
-
-<style scoped>
-
-</style>

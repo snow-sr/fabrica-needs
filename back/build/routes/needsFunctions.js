@@ -16,8 +16,8 @@ export function getAllNeeds(req, res) {
             .then((result) => {
             res.send(result);
         })
-            .catch((err) => {
-            res.status(403).send("Erro ao buscar needs");
+            .catch((e) => {
+            res.status(403).send(`Erro ao buscar Necessidades: ${e}`);
         });
     });
 }
@@ -37,8 +37,7 @@ export function createNeed(req, res) {
             .then((result) => {
             res.send(result);
         })
-            .catch((err) => {
-            console.log(err);
+            .catch(() => {
             res.status(403).send("Erro ao criar need");
         });
     });
@@ -55,8 +54,7 @@ export function deleteNeed(req, res) {
             .then((result) => {
             res.send(result);
         })
-            .catch((err) => {
-            console.log(err);
+            .catch(() => {
             res.status(403).send("Erro ao deletar need");
         });
     });
@@ -79,8 +77,7 @@ export function solveNeed(req, res) {
             .then((result) => {
             res.send(result);
         })
-            .catch((err) => {
-            console.log(err);
+            .catch(() => {
             res.status(403).send("Erro ao resolver need");
         });
     });

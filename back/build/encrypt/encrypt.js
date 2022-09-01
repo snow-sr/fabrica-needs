@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 const saltRounds = 10;
 export const hashIt = (plainPass) => __awaiter(void 0, void 0, void 0, function* () {
     const res = yield bcrypt.hash(plainPass, saltRounds);

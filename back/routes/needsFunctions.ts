@@ -6,11 +6,11 @@ const prisma = new PrismaClient();
 export async function getAllNeeds(req: Request, res: Response) {
   await prisma.need
     .findMany({})
-    .then((result) => {
+    .then((result: any) => {
       res.send(result);
     })
-    .catch((err) => {
-      res.status(403).send("Erro ao buscar needs");
+    .catch((e) => {
+      res.status(403).send(`Erro ao buscar Necessidades: ${e}`);
     });
 }
 
@@ -27,11 +27,10 @@ export async function createNeed(req: Request, res: Response) {
         priority,
       },
     })
-    .then((result) => {
+    .then((result: any) => {
       res.send(result);
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
       res.status(403).send("Erro ao criar need");
     });
 }
@@ -45,11 +44,10 @@ export async function deleteNeed(req: Request, res: Response) {
         id: id,
       },
     })
-    .then((result) => {
+    .then((result: any) => {
       res.send(result);
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
       res.status(403).send("Erro ao deletar need");
     });
 }
@@ -69,11 +67,10 @@ export async function solveNeed(req: Request, res: Response) {
         fabricadorWhoSolved: fabricadorWhoSolved,
       },
     })
-    .then((result) => {
+    .then((result: any) => {
       res.send(result);
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
       res.status(403).send("Erro ao resolver need");
     });
 }

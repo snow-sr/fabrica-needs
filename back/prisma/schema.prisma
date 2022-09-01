@@ -12,15 +12,12 @@ model Need {
   name                String
   description         String
   solved              Boolean     @default(false)
-  aproved             Boolean     @default(false)
   fabricadorWhoSolved String?
   priority            Int         @default(1)
   createdAt           DateTime    @default(now())
   updatedAt           DateTime    @default(now())
   solvedAt            DateTime?
   solvedBy            Fabricador? @relation(fields: [fabricadorWhoSolved], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  banking             banking?    @relation(fields: [bankingId], references: [id])
-  bankingId           String?
 }
 
 model Fabricador {
@@ -33,7 +30,7 @@ model Fabricador {
   updatedAt         DateTime     @default(now())
   Need              Need[]
   Permissions       Permission[]
-  banking           banking[]
+  balance           Decimal      @default(0.00)
 }
 
 model Permission {
@@ -43,13 +40,4 @@ model Permission {
   updatedAt    DateTime    @default(now())
   Fabricador   Fabricador? @relation(fields: [fabricadorId], references: [id])
   fabricadorId String?
-}
-
-model banking {
-  id           String     @id @default(cuid())
-  candyCount   Int        @default(0)
-  updatedAt    DateTime   @default(now())
-  Fabricador   Fabricador @relation(fields: [fabricadorId], references: [id])
-  fabricadorId String
-  toAprove     Need[]
 }

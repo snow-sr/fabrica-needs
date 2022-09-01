@@ -21,10 +21,10 @@ export function createFabricador(req, res) {
                 password: (yield pass).toString(),
             },
         })
-            .then((result) => {
+            .then(() => {
             res.send("Fabricador criado com sucesso!");
         })
-            .catch((err) => {
+            .catch(() => {
             res.status(403).send("Erro ao criar fabricador");
         });
     });
@@ -36,10 +36,10 @@ export function deleteFabricador(req, res) {
             id: req.params.id,
         },
     })
-        .then((result) => {
+        .then(() => {
         res.send("Fabricador deletado com sucesso!");
     })
-        .catch((err) => {
+        .catch(() => {
         res.status(403).send("Erro ao deletar fabricador");
     });
 }
@@ -64,7 +64,7 @@ export function loginFabricador(req, res) {
             res.send(result);
         }
         else {
-            res.status(403).send("Login inválido");
+            res.status(401).send("Login inválido");
         }
     })
         .catch((err) => {
@@ -76,6 +76,20 @@ export function getAllFabricadores(req, res) {
         res.json(fabricadores);
     });
 }
+export function getSpecificFabricador(req, res) {
+    prisma.fabricador
+        .findUnique({
+        where: {
+            id: req.params.id,
+        },
+    })
+        .then((fabricador) => {
+        res.json(fabricador);
+    })
+        .catch((e) => {
+        res.status(404).send(e);
+    });
+}
 export function getAllSolvedNeeds(req, res) {
     prisma.need
         .findMany({
@@ -85,6 +99,19 @@ export function getAllSolvedNeeds(req, res) {
     })
         .then((needs) => {
         res.json(needs);
+    });
+}
+export function getBalance(req, res) {
+    prisma.fabricador
+        .findFirst({
+        where: {
+            id: req.params.id,
+        },
+    })
+        .then((profile) => {
+        if (profile === null || profile === void 0 ? void 0 : profile.balance) {
+            res.send(profile.balance);
+        }
     });
 }
 //# sourceMappingURL=fabricadoresFunctions.js.map
