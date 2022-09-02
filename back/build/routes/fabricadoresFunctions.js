@@ -12,20 +12,23 @@ import { hashIt, compareIt } from "../encrypt/encrypt.js";
 const prisma = new PrismaClient();
 export function createFabricador(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        let pass = hashIt(req.body.password);
+        let pass = yield hashIt(req.body.password);
+        let fullName = req.body.name;
+        let userName = req.body.userName;
         yield prisma.fabricador
             .create({
             data: {
-                name: req.body.name,
-                userName: req.body.userName,
+                name: fullName,
                 password: (yield pass).toString(),
+                userName: userName,
             },
         })
             .then(() => {
             res.send("Fabricador criado com sucesso!");
         })
-            .catch(() => {
-            res.status(403).send("Erro ao criar fabricador");
+            .catch((e) => {
+            console.log(e);
+            res.status(403).send("Erro ao criar fabricador" + e);
         });
     });
 }

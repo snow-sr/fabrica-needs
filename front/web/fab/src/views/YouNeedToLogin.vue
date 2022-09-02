@@ -23,6 +23,7 @@ export default {
       fullName: "",
       user: "",
       pass: "",
+      created: false,
       register: false,
     };
   },
@@ -46,6 +47,19 @@ export default {
           }
         });
     },
+    create() {
+      axios
+        .post("http://localhost:8087/createFabricador", {
+          name: this.fullName,
+          password: this.pass,
+          userName: this.userName,
+        })
+        .then((res) => {
+          this.created = true;
+          this.register = false;
+          res.data;
+        });
+    },
   },
 };
 </script>
@@ -59,6 +73,14 @@ export default {
       <div
         class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
       >
+        <div
+          class="p-4 mb-4 text-sm text-blue-700 bg-blue-100 rounded-lg dark:bg-blue-200 dark:text-blue-800"
+          role="alert"
+          v-if="created"
+        >
+          <span class="font-medium">Conta criada com sucesso!</span> agora, faça
+          login.
+        </div>
         <div
           class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
         >
@@ -135,7 +157,7 @@ export default {
                 <input
                   type="string"
                   name="email"
-                  v-model="userName"
+                  v-model="fullName"
                   id="email"
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Fabricador Da Silva Sauro"
@@ -177,10 +199,10 @@ export default {
                 </div>
                 <button
                   type="submit"
-                  @click="login()"
+                  @click="create()"
                   class="w-full text-white bg-purple-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                 >
-                  Fazer login
+                  Fazer registro
                 </button>
               </div>
               <a
