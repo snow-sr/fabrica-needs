@@ -5,7 +5,11 @@ const prisma = new PrismaClient();
 
 export async function getAllNeeds(req: Request, res: Response) {
   await prisma.need
-    .findMany({})
+    .findMany({
+      where: {
+        solved: false,
+      },
+    })
     .then((result: any) => {
       res.send(result);
     })

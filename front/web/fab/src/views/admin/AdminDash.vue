@@ -3,18 +3,15 @@ import FooterComp from "../../components/FooterComponent.vue";
 import headerComp from "../../components/genericHeader.vue";
 import NeedForm from "../../components/admin/needForm.vue";
 import { useUserStore } from "@/stores/userStore.js";
-import { useFabricadoresStore } from "@/stores/fabricadores.js";
+import ListUsers from "../../components/admin/listUsers.vue";
 // import { useRouter } from "vue-router";
 // import { useNeedsStore } from "../stores/counter";
 
 export default {
   setup() {
     const store = useUserStore();
-    const fabricadores = useFabricadoresStore();
-    fabricadores.fetchFab();
     return {
       store,
-      fabricadores,
     };
   },
   data() {
@@ -29,6 +26,7 @@ export default {
     FooterComp,
     headerComp,
     NeedForm,
+    ListUsers,
   },
   mounted() {
     if (!localStorage.getItem("session")) {
@@ -55,7 +53,9 @@ export default {
             <need-form />
           </div>
           <hr class="my-8 h-px bg-gray-800 border-0 dark:bg-gray-700" />
-          <div></div>
+          <div>
+            <list-users />
+          </div>
         </section>
       </div>
     </main>

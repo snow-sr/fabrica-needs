@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 // import axios from "axios";
-import GetFab from "@/services/needs";
+import FabricadoresApi from "@/services/fabricadores.js";
 
 export const useFabricadoresStore = defineStore({
   id: "Fabricadores",
@@ -8,14 +8,11 @@ export const useFabricadoresStore = defineStore({
     listOfFabricadores: [],
   }),
   actions: {
-    async fetchFab() {
-      const fabApi = new GetFab();
-      try {
-        this.listOfFabricadores = await fabApi.fetchFabricadores();
-        return Promise.resolve();
-      } catch (e) {
-        return Promise.reject(e);
-      }
+    async fetchFabricadores() {
+      const api = new FabricadoresApi();
+      await api.fetchFabricadores().then((res) => {
+        this.listOfFabricadores = res;
+      });
     },
   },
   // getters: {

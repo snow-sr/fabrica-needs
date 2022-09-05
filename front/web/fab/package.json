@@ -11,11 +11,14 @@
     "@auth0/auth0-vue": "^1.0.2",
     "axios": "^0.27.2",
     "chart.js": "^3.8.2",
+    "dayjs": "^1.11.5",
     "flowbite": "^1.5.1",
+    "moment": "^2.29.4",
     "pinia": "^2.0.16",
     "tw-elements": "^1.0.0-alpha12",
     "vue": "^3.2.37",
     "vue-chartjs": "^4.1.1",
+    "vue-moment": "^4.1.0",
     "vue-router": "^4.1.2"
   },
   "devDependencies": {

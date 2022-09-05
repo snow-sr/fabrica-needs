@@ -12,7 +12,11 @@ const prisma = new PrismaClient();
 export function getAllNeeds(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         yield prisma.need
-            .findMany({})
+            .findMany({
+            where: {
+                solved: false,
+            },
+        })
             .then((result) => {
             res.send(result);
         })

@@ -1,4 +1,7 @@
 <script>
+import listNeeds from "@/components/listNeeds.vue";
+import needsFuncs from "../../services/needs";
+const funcs = new needsFuncs();
 export default {
   data() {
     return {
@@ -8,10 +11,24 @@ export default {
         priority: 1,
       },
       createdNeed: false,
+      rerender: 0,
     };
   },
+  components: {
+    listNeeds,
+  },
   methods: {
-    createNeed() {},
+    async createNeed() {
+      const response = await funcs.createdNeed(this.need);
+      console.log(response);
+      if (response.status === 201) {
+        this.createdNeed = true;
+      }
+      this.rerender++;
+    },
+    async update() {
+      this.rerender--;
+    },
   },
 };
 </script>
@@ -20,7 +37,7 @@ export default {
     <h1 class="font-mono text-center text-7xl">Criar need</h1>
   </div>
   <div>
-    <form>
+    <div>
       <div class="relative z-0 mb-6 w-full group">
         <input
           type="text"
@@ -31,11 +48,6 @@ export default {
           placeholder="Comprar café"
           required="true"
         />
-        <label
-          for="floating_email"
-          class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-          >Nome da necessidade</label
-        >
       </div>
       <div class="relative z-0 mb-6 w-full group">
         <input
@@ -66,12 +78,6 @@ export default {
           placeholder="Ficar sem café é osso"
           required=""
         />
-        <label
-          for="floating_password"
-          class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-        >
-          Descrição da necessidade
-        </label>
       </div>
       <button
         type="submit"
@@ -80,6 +86,7 @@ export default {
       >
         Submit
       </button>
-    </form>
+    </div>
+    <list-needs :key="rerender" v-on:updated="update()" admin="true" />
   </div>
 </template>
