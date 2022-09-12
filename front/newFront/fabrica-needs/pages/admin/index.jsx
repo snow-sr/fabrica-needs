@@ -1,10 +1,12 @@
 import { Card } from "flowbite-react";
 import { CreateUser, ListUsers } from "../../components/admin/Users";
 import { CreateNeed, ListNeeds } from "../../components/admin/Needs";
+import { AdminNavbar } from "../../components/admin/adminNavbar";
 
 export default function Admin() {
   return (
     <div className="dark">
+      <AdminNavbar />
       <div className="min-h-screen max-h-full flex justify-center items-center bg-gray-900">
         <div className="mx-12">
           <Card>

@@ -1,7 +1,7 @@
-export default function Home() {
+export default Home = () => {
   return (
-    <div className="dark">
+    <div className="dark bg-gray-900">
       <h1>Home</h1>
     </div>
   );
-}
+};
