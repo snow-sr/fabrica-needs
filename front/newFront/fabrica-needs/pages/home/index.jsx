@@ -6,19 +6,21 @@ import { Alert } from "flowbite-react";
 
 export default function HomePage() {
   return (
-    <div className="dark">
-      <UserNavbar />
-      <Alert color="info" rounded={false}>
-        <span>
-          <span className="font-medium">
-            Esse sistema está em desenvolvimento!
-          </span>{" "}
-          Então, cuidado com os bugs que ainda cercam estas linhas de código, em
-          caso de Bug, favor comunicar o suporte através do sistema de{" "}
-          <span className="font-medium">Bug Bounty</span>.
-        </span>
-      </Alert>
-      <div className="min-h-screen max-h-full flex gap-24 justify-center items-center bg-gray-900">
+    <main className="dark min-h-screen flex flex-col justify-between">
+      <header>
+        <UserNavbar />
+        <Alert color="info" rounded={false}>
+          <span>
+            <span className="font-medium">
+              Esse sistema está em desenvolvimento!
+            </span>{" "}
+            Então, cuidado com os bugs que ainda cercam estas linhas de código,
+            em caso de Bug, favor comunicar o suporte através do sistema de{" "}
+            <span className="font-medium">Bug Bounty</span>.
+          </span>
+        </Alert>
+      </header>
+      <div className="flex gap-24 justify-center items-center">
         <div>
           <ListNeeds />
         </div>
@@ -27,6 +29,6 @@ export default function HomePage() {
         </div>
       </div>
       <FooterComponent />
-    </div>
+    </main>
   );
 }

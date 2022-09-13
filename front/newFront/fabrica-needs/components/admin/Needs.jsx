@@ -42,30 +42,38 @@ export const CreateNeed = () => {
 
 export const ListNeeds = () => {
   return (
-    <section>
+    <div className="my-12">
       <Card>
-        <h5 className="text-2xl  text-gray-900 dark:text-white">
-          Lista de needs:
-        </h5>
-        <div className="max-w-96">
-          <ListGroup>
-            <ListGroup.Item active={true} href="/list-group">
-              Café
-              <span className="text-stone-500 ml-7">100 UP</span>
-            </ListGroup.Item>
-            <ListGroup.Item href="/list-group">
-              Settings <span className="text-stone-500 ml-7">100 UP</span>
-            </ListGroup.Item>
-            <ListGroup.Item href="/list-group">
-              Really long task{" "}
-              <span className="text-stone-500 ml-7">100 UP</span>
-            </ListGroup.Item>
-            <ListGroup.Item href="/list-group">
-              Filtro de café <span className="text-stone-500 ml-7">100 UP</span>
-            </ListGroup.Item>
-          </ListGroup>
-        </div>
+        <section className="w-96">
+          <h5 className="text-2xl mb-5 italic text-gray-900 dark:text-white">
+            Lista de needs:
+          </h5>
+          <div className="w-full">
+            <ListGroup>
+              <ListGroup.Item href="/list-group">
+                <p className="py-2">Café</p>
+                <span className="text-stone-500 ml-auto mr-0 py-2">100 UP</span>
+              </ListGroup.Item>
+              <ListGroup.Item href="/list-group">
+                <p className="py-2">Filtro de Café</p>
+                <span className="text-stone-500 ml-auto mr-0 py-2">100 UP</span>
+              </ListGroup.Item>
+              <ListGroup.Item href="/list-group">
+                <p className="py-2">Produto de limpeza</p>
+                <span className="text-stone-500 ml-auto mr-0 py-2">100 UP</span>
+              </ListGroup.Item>
+              <ListGroup.Item href="/list-group">
+                <p className="py-2">Sapinho do css</p>
+                <span className="text-stone-500 ml-auto mr-0 py-2">100 UP</span>
+              </ListGroup.Item>
+              <ListGroup.Item href="/list-group">
+                <p className="py-2">Gatinho</p>
+                <span className="text-stone-500 ml-auto mr-0 py-2">100 UP</span>
+              </ListGroup.Item>
+            </ListGroup>
+          </div>
+        </section>
       </Card>
-    </section>
+    </div>
   );
 };
