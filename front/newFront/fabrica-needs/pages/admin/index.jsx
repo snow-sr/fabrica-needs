@@ -1,9 +1,27 @@
 import { Card } from "flowbite-react";
+import { useState, useEffect } from "react";
 import { CreateUser, ListUsers } from "../../components/admin/Users";
 import { CreateNeed, ListNeeds } from "../../components/admin/Needs";
 import { AdminNavbar } from "../../components/admin/adminNavbar";
+import axios from "axios";
 
-export default function Admin() {
+function Admin({ Needs }) {
+  const [reload, setReload] = useState(false);
+  const [needs, setNeeds] = useState([]);
+
+  useEffect(() => {
+    setNeeds(Needs);
+  });
+
+  const defineReload = async () => {
+    setReload(!reload);
+
+    let newNeeds = await (
+      await axios.get("http://localhost:8089/api/need")
+    ).data;
+    setNeeds(newNeeds);
+  };
+
   return (
     <div className="dark">
       <AdminNavbar />
@@ -11,10 +29,10 @@ export default function Admin() {
         <div className="mx-12">
           <Card>
             <div className="m-5">
-              <CreateNeed />
+              <CreateNeed activateReload={defineReload} />
             </div>
             <div className="m-5">
-              <ListNeeds />
+              <ListNeeds Needs={needs} activateReload={defineReload} />
             </div>
           </Card>
         </div>
@@ -32,3 +50,10 @@ export default function Admin() {
     </div>
   );
 }
+
+Admin.getInitialProps = async () => {
+  const { data } = await axios.get("http://localhost:8089/api/need");
+  return { Needs: data };
+};
+
+export default Admin;

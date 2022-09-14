@@ -2,9 +2,10 @@ import { ListNeeds } from "../../components/admin/Needs";
 import { UserNavbar } from "../../components/ui/userNavbar";
 import { FooterComponent } from "../../components/ui/footer";
 import { ListSolved } from "../../components/ui/solvedNeeds";
+import axios from "axios";
 import { Alert } from "flowbite-react";
 
-export default function HomePage() {
+function HomePage({ Needs }) {
   return (
     <main className="dark min-h-screen flex flex-col justify-between">
       <header>
@@ -22,7 +23,7 @@ export default function HomePage() {
       </header>
       <div className="flex gap-24 justify-center items-center">
         <div>
-          <ListNeeds />
+          <ListNeeds Needs={Needs} />
         </div>
         <div>
           <ListSolved />
@@ -32,3 +33,10 @@ export default function HomePage() {
     </main>
   );
 }
+
+HomePage.getInitialProps = async () => {
+  const { data } = await axios.get("http://localhost:8089/api/need");
+  return { Needs: data };
+};
+
+export default HomePage;
