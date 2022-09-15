@@ -4,8 +4,14 @@ import { FooterComponent } from "../../components/ui/footer";
 import { ListSolved } from "../../components/ui/solvedNeeds";
 import axios from "axios";
 import { Alert } from "flowbite-react";
+import { useDispatch, useSelector } from "react-redux";
+import { populate } from "../../slices/needsSlice";
 
 function HomePage({ Needs }) {
+  const dispatch = useDispatch();
+  dispatch(populate(Needs));
+  const needsState = useSelector((state) => state.needs.needs);
+
   return (
     <main className="dark min-h-screen flex flex-col justify-between">
       <header>
@@ -23,7 +29,7 @@ function HomePage({ Needs }) {
       </header>
       <div className="flex gap-24 justify-center items-center">
         <div>
-          <ListNeeds Needs={Needs} />
+          <ListNeeds Needs={needsState} />
         </div>
         <div>
           <ListSolved />

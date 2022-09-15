@@ -2,17 +2,20 @@ import { Card, Label, TextInput, Button, ListGroup } from "flowbite-react";
 import { useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { add } from "../../slices/needsSlice";
 
 export const CreateNeed = ({ activateReload }) => {
   const { register, handleSubmit, errors } = useForm();
+  const dispatch = useDispatch();
+
   const [need, setNeed] = useState({
     title: "",
     reward: "",
   });
 
   const registerNeed = async (need) => {
-    await axios.post("http://localhost:8089/api/need", need);
-    activateReload();
+    await dispatch(add(need));
   };
 
   return (
@@ -66,7 +69,7 @@ export const CreateNeed = ({ activateReload }) => {
   );
 };
 
-export const ListNeeds = ({ Needs, activateReload }) => {
+export const ListNeeds = ({ Needs }) => {
   return (
     <div className="my-12">
       <Card>
@@ -79,13 +82,12 @@ export const ListNeeds = ({ Needs, activateReload }) => {
               {Needs.map((need) => {
                 return (
                   <ListGroup.Item
+                    key={need.id || need.title}
                     onClick={() => {
                       axios.delete(
-                        `http://localhost:8089/api/need/delete/${need.id}`
+                        "http://localhost:8089/api/need/delete/" + need.id
                       );
-                      activateReload();
                     }}
-                    key={need.id || need.title}
                   >
                     <p className="py-2">{need.title}</p>
                     <span className="text-stone-500 ml-auto mr-0 py-2">

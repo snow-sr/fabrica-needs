@@ -4,23 +4,14 @@ import { CreateUser, ListUsers } from "../../components/admin/Users";
 import { CreateNeed, ListNeeds } from "../../components/admin/Needs";
 import { AdminNavbar } from "../../components/admin/adminNavbar";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { populate } from "../../slices/needsSlice";
 
 function Admin({ Needs }) {
-  const [reload, setReload] = useState(false);
-  const [needs, setNeeds] = useState([]);
-
-  useEffect(() => {
-    setNeeds(Needs);
-  });
-
-  const defineReload = async () => {
-    setReload(!reload);
-
-    let newNeeds = await (
-      await axios.get("http://localhost:8089/api/need")
-    ).data;
-    setNeeds(newNeeds);
-  };
+  const dispatch = useDispatch();
+  dispatch(populate(Needs));
+  const needsState = useSelector((state) => state.needs.needs.needs);
+  console.log(needsState);
 
   return (
     <div className="dark">
@@ -29,10 +20,10 @@ function Admin({ Needs }) {
         <div className="mx-12">
           <Card>
             <div className="m-5">
-              <CreateNeed activateReload={defineReload} />
+              <CreateNeed />
             </div>
             <div className="m-5">
-              <ListNeeds Needs={needs} activateReload={defineReload} />
+              <ListNeeds Needs={Needs} />
             </div>
           </Card>
         </div>
